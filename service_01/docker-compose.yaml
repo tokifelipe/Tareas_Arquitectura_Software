@@ -1,3 +1,5 @@
+version: '3.7'
+
 services:
   demo_01_service_01:
     build: .
@@ -7,17 +9,55 @@ services:
       - .:/code
     links:
       - demo_01_service_01_mongodb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - demo_01
+
   demo_01_service_01_mongodb:
     image: mongo:5.0
     volumes:
       - demo_01_service_01_mongodb_container:/data/db
     logging:
-        driver: none
+      driver: none
+    networks:
+      - demo_01
+
+  loki:
+    image: grafana/loki:2.4.1
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    networks:
+      - demo_01
+
+  promtail:
+    image: grafana/promtail:2.4.1
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
+      - /var/log:/var/log
+      - /var/lib/docker/containers:/var/lib/docker/containers
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    networks:
+      - demo_01
+
+  grafana:
+    image: grafana/grafana:8.2.2
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - demo_01
 
 volumes:
   demo_01_service_01_mongodb_container:
 
 networks:
-  default:
-    name: demo_01
+  demo_01:
     external: true

@@ -3,9 +3,9 @@ import requests
 # Paso 1: Crear un equipo en el microservicio 2
 team_url = "http://localhost:5001/teams"
 team_data = {
-    "name": "Team A",
+    "name": "Team u chile",
     "country": "Chile",  # Asegúrate de que el valor sea uno de los definidos en la enumeración Country
-    "description": "A new team"
+    "description": "bad chilean club"
 }
 team_response = requests.post(team_url, json=team_data)
 
@@ -22,11 +22,11 @@ except Exception as err:
     print(f"Other error occurred: {err}")
 
 # Paso 2: Crear un jugador en el microservicio 1
-player_url = "http://localhost:59614/players"
+player_url = "http://localhost:5000/players"
 player_data = {
-    "name": "Felipe",
+    "name": "pedro",
     "age": 25,
-    "number": 10,
+    "number": 1,
     "team_id": "some_team_id",
     "description": "A new player"
 }
