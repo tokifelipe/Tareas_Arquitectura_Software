@@ -6,10 +6,10 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://loki:3100/loki/api/v1/push
+  - url: http://loki_service_02:3102/loki/api/v1/push  # Cambiado a 3102
 
 scrape_configs:
-  - job_name: demo_01_service_01
+  - job_name: demo_01_service_02
     static_configs:
       - targets:
           - localhost

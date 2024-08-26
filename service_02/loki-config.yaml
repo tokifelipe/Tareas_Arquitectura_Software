@@ -1,7 +1,7 @@
 auth_enabled: false
 
 server:
-  http_listen_port: 3100
+  http_listen_port: 3102  # Cambiado a 3102
   grpc_listen_port: 9096
 
 common:
@@ -18,7 +18,7 @@ common:
 
 schema_config:
   configs:
-    - from: 2020-10-24
+    - from: 2024-10-08
       store: boltdb-shipper
       object_store: filesystem
       schema: v11
